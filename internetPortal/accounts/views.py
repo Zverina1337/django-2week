@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from .forms import UserRegistrationForm, ApplicationCreateForm
@@ -38,7 +39,11 @@ class view_applications(generic.ListView):
     model = Application
     paginate_by = 3
     def get_queryset(self):
-        return Application.objects.filter(user__exact=self.request.user.id)
+        if self.request.user.is_staff:
+            return Application.objects.filter()
+        else:
+            return Application.objects.filter(user__exact=self.request.user.id)
+
 
 class create_application(CreateView):
     model = Application
@@ -55,6 +60,11 @@ class detail_application(DetailView):
     model = Application
     template_name = 'accounts/application_detail.html'
 
+
 class delete_application(DeleteView):
     model = Application
     success_url = reverse_lazy('profile_applications')
+
+class update_application(UpdateView):
+    model = Application
+    fields = ('status', 'category')

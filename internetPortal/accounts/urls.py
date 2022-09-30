@@ -13,6 +13,7 @@ urlpatterns = [
     path('profile/applications/create', views.create_application.as_view(), name='profile_applications_create'),
     path('profile/applications/<int:pk>/',views.detail_application.as_view(), name='profile_application_detail'),
     path('profile/applications/<int:pk>/delete',views.delete_application.as_view(), name='profile_application_delete'),
+    path('profile/applications/<int:pk>/update', views.update_application.as_view(), name='profile_application_update')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

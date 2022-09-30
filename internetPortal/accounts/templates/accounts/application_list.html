@@ -36,7 +36,7 @@
             </div>
             <small class="d-block text-end mt-3">
               <a href="{% url 'profile_application_delete' application.id %}">Удалить</a>
-              <p>{{ application.get_status_display }}, {{ application.get_category_display }}</p>
+              <p>{{ application.get_status_display }}, {{ application.get_category_display }} {% if user.is_staff %}Пользователь : {{ application.user.get_username }}{% endif %}</p>
             </small>
         </div>
     </li>

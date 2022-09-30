@@ -5,4 +5,6 @@
 <h1>Название заявки {{ application.title }}</h1>
 <h2>Описание: {{ application.desc }}</h2>
 <img class="bd-placeholder-img flex-shrink-0 me-2 rounded"  src="../../..{{ application.img.url }}" alt="" width="700px">
+<p>{{ application.get_status_display }}, {{ application.get_category_display }} {% if user.is_staff %}Пользователь : {{ application.user.get_username }}{% endif %}</p>
+{% if user.is_staff %}<a href="{% url 'profile_application_update' application.id %}">Изменить</a>{% endif %}
 {% endblock %}

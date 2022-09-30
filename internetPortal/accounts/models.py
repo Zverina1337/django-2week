@@ -59,18 +59,24 @@ class Application(models.Model):
     img = models.ImageField(upload_to='img', verbose_name='Картинка')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Пользователь', null=True, blank=True, to_field='id')
     
+    NEW = 'new'
+    LOAD = 'load'
+    READY = 'ready'
     LOAN_STATUS = (
-        ("new",'Новая'),
-        ("load",'Принято в работу'),
-        ("ready",'Выполнено'),
+        (NEW,'Новая'),
+        (LOAD,'Принято в работу'),
+        (READY,'Выполнено'),
     )
 
     status = models.CharField(max_length=30, choices=LOAN_STATUS, default='new', help_text='Статус', verbose_name='Статус')
 
+    SKETCH = 'sketch'
+    MID_DETAIL = 'mid_detail'
+    AUTHOR = 'author'
     CATEGORIES = (
-        ('sketch','Эскизный проект'),
-        ('mid_detail','Средняя детализация'),
-        ('author','Авторский интерьер'),
+        (SKETCH,'Эскизный проект'),
+        (MID_DETAIL,'Средняя детализация'),
+        (AUTHOR,'Авторский интерьер'),
     )
 
     category = models.CharField(max_length=30, choices=CATEGORIES, default='Эскизный проект', help_text='Категории', verbose_name='Категории')
