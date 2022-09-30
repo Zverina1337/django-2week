@@ -19,12 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h407l!7&50kt-of=1j$_bv-484(u&_ja(@w4an2kg8pnhxiiow'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-h407l!7&50kt-of=1j$_bv-484(u&_ja(@w4an2kg8pnhxiiow')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['onekickman.pythonanywhere.com']
 
 
 # Application definition
@@ -78,8 +78,19 @@ WSGI_APPLICATION = 'internetPortal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.mysql', 
+
+        'NAME': 'OneKickMan$internetPortal',
+
+        'USER': 'OneKickMan',
+
+        'PASSWORD': 'OneKickMan$internetPortal',
+
+        'HOST': 'OneKickMan.mysql.pythonanywhere-services.com',
+
+        'PORT': '3306',
+
     }
 }
 
@@ -134,3 +145,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
