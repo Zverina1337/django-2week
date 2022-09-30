@@ -1,6 +1,6 @@
-from .models import User
+from .models import Application, User
 from django import forms
-from django.core.validators import validate_slug, RegexValidator, EmailValidator
+from django.core.validators import RegexValidator, EmailValidator
 
 class UserRegistrationForm(forms.ModelForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput,
@@ -31,4 +31,10 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Подтвердите обработку персональных данных')
         return cd['checkbox']
 
-    
+class ApplicationCreateForm(forms.ModelForm):
+    title = forms.CharField(label='Название',widget=forms.TextInput)
+    desc = forms.CharField(label='Описание', widget=forms.TextInput)
+
+    class Meta:
+        model = Application
+        fields = ('title', 'desc', 'img')

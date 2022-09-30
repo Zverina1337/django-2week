@@ -1,2 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+
 <h1>Личный кабинет пользователя</h1>
-<a href="{% url 'logged_out' %}">Выйти</a>
+<a href="{% url 'profile_applications' %}">Заявки</a>
+<a href="{% url 'logout' %}">Выйти</a>
+{% endblock %}

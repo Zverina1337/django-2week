@@ -1,7 +1,6 @@
-from wsgiref.validate import validator
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
- 
+from django.urls import reverse
 # Создаем класс менеджера пользователей
 class MyUserManager(BaseUserManager):
     # Создаём метод для создания пользователя
@@ -46,9 +45,38 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username' # Идентификатор для обращения 
-    REQUIRED_FIELDS = [''] # Список имён полей для Superuser
+    REQUIRED_FIELDS = ['email'] # Список имён полей для Superuser
  
     objects = MyUserManager()
 
     def __str__(self):
         return self.full_name
+
+class Application(models.Model):
+    id = models.AutoField(primary_key=True, unique=True, verbose_name='id')
+    title = models.CharField(max_length=200, verbose_name='Название')
+    desc = models.TextField(max_length=400, verbose_name='Описание')
+    img = models.ImageField(upload_to='img', verbose_name='Картинка')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Пользователь', null=True, blank=True, to_field='id')
+    
+    LOAN_STATUS = (
+        ("new",'Новая'),
+        ("load",'Принято в работу'),
+        ("ready",'Выполнено'),
+    )
+
+    status = models.CharField(max_length=30, choices=LOAN_STATUS, default='new', help_text='Статус', verbose_name='Статус')
+
+    CATEGORIES = (
+        ('sketch','Эскизный проект'),
+        ('mid_detail','Средняя детализация'),
+        ('author','Авторский интерьер'),
+    )
+
+    category = models.CharField(max_length=30, choices=CATEGORIES, default='Эскизный проект', help_text='Категории', verbose_name='Категории')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self): # Тут мы создали новый метод
+        return reverse('profile_application_detail', args=[str(self.id)])
