@@ -4,13 +4,10 @@
 
 {% block title %}Создать заявку{% endblock %}
 {% block content %}
+{{ wh_status }}
 <form action="" method="post" enctype="multipart/form-data">   
     {% csrf_token %}
     {{ form|crispy }}
-    {% if user.is_staff %}
-        <input type="submit" value="Изменить" class="btn btn-success"/>
-    {% else %}
-        <input type="submit" value="Создать" class="btn btn-success"/>
-    {% endif %}
+    <input type="submit" value="Создать" class="btn btn-success"/>
 </form>
 {% endblock %}

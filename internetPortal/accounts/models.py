@@ -1,3 +1,6 @@
+from datetime import datetime
+from email.policy import default
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.urls import reverse
@@ -36,6 +39,12 @@ class MyUserManager(BaseUserManager):
         # Возвращаем нового созданного админа
         return self._create_user(email, username, password, is_staff=True, is_superuser=True)
 
+class Category(models.Model):
+    name = models.CharField(max_length=200, help_text='Введите категорию заявки')
+
+    def __str__(self):
+        return self.name
+        
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     full_name = models.CharField(max_length=50, help_text="Напишите ФИО")
@@ -57,8 +66,11 @@ class Application(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название')
     desc = models.TextField(max_length=400, verbose_name='Описание')
     img = models.ImageField(upload_to='img', verbose_name='Картинка')
+    ready_design = models.ImageField(upload_to='design', verbose_name='Готовый дизайн', null=True, blank=True) 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Пользователь', null=True, blank=True, to_field='id')
-    
+    date = models.DateField(default=datetime.today())
+    comment = models.TextField(max_length=400, verbose_name='Комментарий', null=True, blank=True)
+
     NEW = 'new'
     LOAD = 'load'
     READY = 'ready'

@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-h407l!7&50kt-o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = ['onekickman.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,19 +78,8 @@ WSGI_APPLICATION = 'internetPortal.wsgi.application'
 
 DATABASES = {
     'default': {
-
-        'ENGINE': 'django.db.backends.mysql', 
-
-        'NAME': 'OneKickMan$internetPortal',
-
-        'USER': 'OneKickMan',
-
-        'PASSWORD': 'OneKickMan$internetPortal',
-
-        'HOST': 'OneKickMan.mysql.pythonanywhere-services.com',
-
-        'PORT': '3306',
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

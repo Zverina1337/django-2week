@@ -35,6 +35,7 @@ class ApplicationCreateForm(forms.ModelForm):
     title = forms.CharField(label='Название',widget=forms.TextInput)
     desc = forms.CharField(label='Описание', widget=forms.TextInput)
 
+    
     class Meta:
         model = Application
         fields = ('title', 'desc', 'img')
